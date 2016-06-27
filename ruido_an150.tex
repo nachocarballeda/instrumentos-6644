@@ -112,7 +112,14 @@ Otro factor que afecta a las mediciones de ruido es el ancho de banda en el cual
 
 No solo los 2 o 6 dB del ancho de banda del analizador afectan la medida del nivel de ruido, la forma del filtro  de resolución tambien juega un papel importante.\newline
 
-Para hacer posible las comparaciones, definimos un \quotes{ancho de banda de potencia del ruido}: el ancho de un filtro rectangular que permite pasar la misma potencia de ruido que el filtro del  analizador. Para un filtro cuasi-Gausiano en un analizador Agilent, el equivalente \quotes{ancho de banda de la potencia del rudo} es de 1.05 a 1.13 veces los 3 dB del ancho de banda, dependiendo de la selectividad del ancho de banda. Por ejemplo para un filtro RBW de 10KHz se tiene una \quotes{ancho de banda de potencia del ruido} en el rango de 10.5 a 11.3 KHz.\newline
+Para hacer posible las comparaciones, definimos un \quotes{ancho de banda de potencia del ruido}: el ancho de un filtro rectangular que permite pasar la misma potencia de ruido que el filtro del  analizador, ver figura \ref{modelo}. Para un filtro cuasi-Gausiano en un analizador Agilent, el equivalente \quotes{ancho de banda de la potencia del rudo} es de 1.05 a 1.13 veces los 3 dB del ancho de banda, dependiendo de la selectividad del ancho de banda. Por ejemplo para un filtro RBW de 10KHz se tiene una \quotes{ancho de banda de potencia del ruido} en el rango de 10.5 a 11.3 KHz.\newline
+
+\begin{figure}[H]
+    %\centering
+    \includegraphics[width=0.7\textwidth]{../img/modelado.png}
+        \caption{Ganancia de potencia vs frecuencia de un filtro RBW puede ser modelado como un filtro rectangular con el mismo area y nivel pico y un ancho de el \quotes{ancho de banda de potencia de ruido} equivalente}
+        \label{modelo}
+\end{figure}
 
 Si usamos $10*\log(BW_{2}/BW_{1})$ para ajustar el nivel de ruido mostrado a lo que habriamos medido con \quotes{ancho de banda de potencia del ruido} del mismo valor que con nuestro ancho de banda de 3 dB, encontramos que los ajustes varian de: $10*log(10000/10500) = -0.21dB$ a $10*log(10000/11300)=-0.53 dB$. En otras palabras, si restamos algo entre 0.21 y 0.53 dB del nivel de ruido indicado, tendremos el \quotes{ancho de banda de potencia de ruido} que es conveniente para realizar los calculos. Para los siguientes ejemplos vamos a usar 0.5 dB como un compromiso razonable para la correccion del ancho de banda.
 \newline
