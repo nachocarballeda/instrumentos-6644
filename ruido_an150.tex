@@ -71,7 +71,47 @@
 
 \newpage
 
-\section{Ruido}
+\section{Sensibilidad y Ruido}
+\subsection{Sensibilidad}
+El piso de ruido generado por el analizador de espectros limita las mediciones de bajo nivel. El ruido es amplificado por las multiples etapas de amplificación del analizador. En un analizador de espectro este piso de ruido se conoce como DANL (displayed average noise level). 
+
+La potencia del ruido es una funcion del ancho de banda $f(BW)$. Usando una terminacion de 50 ohms en la entrada para prevenir que entren señales externas no de seadas al analizador, veremos que esta terminacion genera una pequeña cantidad de ruido igual a kTB , k : cte Boltzman, T : Temperatura y B : Ancho de banda medido en Hz. De esta forma podemos determinal el DANL. \newline
+
+Como la potencia de ruido es una funcion del ancho de banda este valor es usualmente normalizado a 1 Hz. Entonces a temperatura ambiente esto da $-174 dBm/Hz$
+
+La resolucion del ancho de banda RBW también afecta la medición de la siguiente forma:\newline
+
+\begin{equation}
+10*\log{BW_{2}/BW_{1}}
+\label{BW}
+\end{equation} 
+
+ donde $BW_1$ es la resolucion de comienzo y $BW_2$ la de fin.\newline
+
+Entonces si cambiamos la resolucion por un factor de 10, el piso de ruido mostrado cambia por un factor de 10 dB. En resumen, para señales de banda angosta obtenemos una mejor sensivilidad seleccionando el minimo ancho de banda de resolución. Lo malo de esto es que el barrido es mucho mas lento.
+
+\subsection{Figura de ruido}
+La figura de ruido es definida como la degradacion de la señal ruido por pasar a travez del dispositivo. Podemos expresar esta figura como:
+\begin{equation*}
+F=\frac{S_i/N_i}{S_o/N_o}
+\end{equation*}
+
+Donde F = figura de ruido o factor de ruido, $S_i$ = potencia de la señal de entrada, $N_i$ = verdadera potencia de ruido en la entrada, $S_o$ = Potencia de la señal de salida, $N_o$ = potencia de ruido a la salida. Esta expresión se puede simplificar, ya que la señal de salida es la de la entrada multiplicada por la ganancia del analizador y la ganancia de nuestro analizador es igual a la unidad (igual en la entrada que en la salida). Entonces la expresion queda así:
+
+\begin{equation*}
+F=N_o/N_i
+\end{equation*}
+
+Entonces lo unico que tenemos que hacer para obtener la figura de ruido es comparar el nivel de ruido mostrado en el display con el verdadero en el conector de entrada. Expresando la figura de ruido en dB obtenemos $NF=10*\log{F}=10*\log{N_o}-10*\log{N_i}$
+
+Entonces todo lo que tenemos que hacer para determinar la figura de ruido es medir la potencia de ruido en algun ancho de banda, calular la potencia de ruido que se habria medido a 1 Hz usnado la formula \ref{BW} y comparar el resultado con -174 dBm.
+
+Por ejemplo, si medimos -110 dBm con BW=10 KHz, obtendriamos : $NF=[ruido medido] - 10\log{RBW/1}- kTB_{b=1 Hz} = 24 dB$ 
+
+Como la figura de ruido es independiente del BW podriamos haber seleccionado otro BW y el resultado seria el mismo.
+ 
+Los 24 dB obtenidos en nuestro ejemplo nos dice que una señal sinusoidal debe estar 24 dB por encima de kTB para ser igual al piso de ruido promediado  mostrado en este analizador. Entonces podesmo usar NF para determinar el DANL para un dado BW.
+
 \subsection{Ruido estudiado como una señal}
 
 Cuando querramos usar el analizador de espectros para medir ruido debemos tener en cuenta que por la naturaleza del mismo, este, indica un nivel que es mas bajo que el ruido que estamos midiendo. A continuacion vamos a ver porque sucede esto y como hacer para corregir este efecto.
@@ -90,7 +130,6 @@ Vamos a comenzar como el analizador en modo display lineal. El ruido Gausiano es
     \includegraphics[width=0.8\textwidth]{../img/ruido_gausiano.png}
         \caption{El ruido aleatorio tiene una distribución Gausiana}
         \label{ruido_gausiano}
-        \ref{ruido_gausiano}
 \end{figure}
 
 \begin{figure}[H]
@@ -98,7 +137,6 @@ Vamos a comenzar como el analizador en modo display lineal. El ruido Gausiano es
     \includegraphics[width=0.7\textwidth]{../img/ruido_ray.png}
         \caption{La envolvente de una señal de ruido Gaussiano tiene una distribucion Rayleigh}
         \label{ruido_ray}
-        \ref{ruido_ray}
 \end{figure}
 
 De todas formas nuestro analizador es un voltimetro calibrado que responde a picos para indicar el valor rms de una señal senoidal. Para convertir de calores pico a RMS, nuestro analizador escala su salida por $0.707$ (-3 dB). El valor promedio del ruido distribuido como Rayleigh es escalado entonces por el mismo factor, dandonos una lectura de $0.886 \upvarsigma$ ($1.05 dB$ por debajo de $\upvarsigma$). Para equiparar el valor medio mostrado por el analizador a tension RMS de la señal ruido de entrada debemos tener en cuenta el error introducido en el valor mostrado. Notar que este error no es ambiguo, este es un error constante que puede ser corregido agregando 1.05 dB al valor mostrado en el display.\newline
